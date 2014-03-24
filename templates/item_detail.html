@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block main_container %}
+<h2>{{ object.name }}</h2>
+ {% for photo in object.photos.all %}
+        <a href="/media/{{ photo.image }}">
+         <img src="{{ photo.image.url }}" style="width: 500px; height: auto;">
+	</a>
+ {% endfor %}
+<h4>Society: {{ object.get_society_display }}</h4>
+<p>{{ object.description }}</p>
+{% endblock %}

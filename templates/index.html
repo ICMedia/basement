@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block main_container %}
+
+{% if object_list %}
+<h1>West Basement Auction 2</h1>
+<p>
+We are going to have an auction at 7pm on Monday 24 March, in the Shared Studio (West Basement), if you can't make it, please email <a href=mailto:mediatech@imperial.ac.uk>the Media Technical Manager</a> with your maximum bid and contact phone number by 5pm on Thursday. All items must be cleared out by midday on Tuesday 25 March. Sold as seen; most of this was working when taken out of the studios, but some bits might not work fully!
+</p>
+<h4>Auction Rules:</h4>
+<ul>
+<li>Bid Increments as Follows: £1 up to £10, £2 from £10-£20, £5 from £20-£100, £10 above £100.</li>
+<li>Bids placed in advance will be bid up to the maximum amount stated by the auctioneer, on behalf of the bidder. The maximum amount will not be disclosed by the auctioneer.</li>
+<li>For some items, the winning bid will be referred to the seller for approval before the purchase will take place.</li>
+</ul>
+<p>
+Click on each item to see more information and more images.
+
+</p>
+<div id="itemlist">
+{% for object in object_list %}
+{% if not object.sold %}
+<a href="item/{{ object.label_id }}">
+ <div class="item society-{{ object.society }}" data-society="{{ object.get_society_display }}" style="overflow: hidden;">
+        <div>
+	{% for photo in object.photos.all %}
+	{% if forloop.last %}
+	{% thumbnail photo.image "200" as im %}
+            <img src="{{ im.url }}" style="max-width: 200px; height: 133px; width: auto;">
+	{% endthumbnail %}
+	{% endif %}
+	{% endfor %}
+	<h4>WB{{ object.label_id }}: {{ object.name }}</h4>
+	{% if object.sold %}
+	<span class="sold">SOLD: £{{ object.winningbidamount }}</span>
+	{% endif %}</div>
+    </div>
+</a>
+{% endif %}
+{% endfor %}
+</div>
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% else %}
+<hr/>
+<div class="hero">
+    <h1>Whoops!</h1>
+    <h2>No items yet!</h2>
+</div>
+{% endif %}
+{% endblock %}
