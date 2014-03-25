@@ -76,6 +76,9 @@ class InventoryItem(models.Model):
     
     class Meta:
         ordering = ('-label_id',)
+class InventoryItemRelationship(models.Model):
+    parent_inventory_item = models.ForeignKey(InventoryItem, related_name="parent")
+    child_inventory_item = models.ForeignKey(InventoryItem, related_name="children", unique=True)
 
 class InventoryItemPhoto(models.Model):
     item = models.ForeignKey(InventoryItem, related_name='photos')
