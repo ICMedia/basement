@@ -29,7 +29,7 @@ class InventoryItem(models.Model):
             return no + 1
 
     def __unicode__(self):
-        return u"[WB-%d] %s (%s)" % (self.label_id, self.name, self.get_society_display())
+        return u"%d [WB-%d] %s (%s)" % (self.label_id, self.label_id, self.name, self.get_society_display())
     
     name = models.CharField(max_length=200)
     society = models.CharField(max_length=1, choices=SOCIETIES, default='M')
@@ -76,6 +76,9 @@ class InventoryItem(models.Model):
     
     class Meta:
         ordering = ('-label_id',)
+class InventoryItemRelationship(models.Model):
+    parent_inventory_item = models.ForeignKey(InventoryItem, related_name="parent")
+    child_inventory_item = models.ForeignKey(InventoryItem, related_name="children", unique=True)
 
 class InventoryItemPhoto(models.Model):
     item = models.ForeignKey(InventoryItem, related_name='photos')
