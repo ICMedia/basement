@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.list import MultipleObjectMixin
 from django.views.generic.detail import SingleObjectMixin
 from invent.models import InventoryItem, InventoryItemPhoto
+from django.db.models import Q
 
 # Create your views here.
 
@@ -12,7 +13,7 @@ class ItemListView(ListView):
 #    paginate_by=10
    
     def get_queryset(self):
-        return InventoryItem.objects.filter(status='S').order_by("label_id")
+        return InventoryItem.objects.filter(Q(status=('S'))|Q(status=('R'))).order_by("label_id")
 
 class ItemView(DetailView):
     model=InventoryItem

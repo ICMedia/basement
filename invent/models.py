@@ -19,6 +19,7 @@ class InventoryItem(models.Model):
         ('D', 'Delay until budget finalised'),
         ('S', 'Sell'),
 	('T', 'Techbid'),
+        ('E', 'eBay'),
 	('B', 'Bin or give / sell')	
     )
     def number():

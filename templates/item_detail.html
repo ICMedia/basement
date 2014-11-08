@@ -9,4 +9,8 @@
  {% endfor %}
 <h4>Society: {{ object.get_society_display }}</h4>
 <p>{{ object.description }}</p>
+
+        {% if object.sold %}
+        <span class="sold">SOLD: £{{ object.winningbidamount }}</span>
+        {% endif %}</div>
 {% endblock %}

@@ -37,10 +37,9 @@ class InventoryItemAdmin(admin.ModelAdmin):
    # inlines = [ InventoryItemPhotoInline, InventoryItemRelationshipInline, InventoryItemInline ]
     inlines = [ InventoryItemPhotoInline, InventoryItemRelationshipInline,]
     list_display = ['label_id', 'name', 'society', 'status', 'collected', 'paid', 'sold', 'link_to_admin_for_sold_to', 'winningbidamount']
-    search_fields = ['label_id', 'society', 'status']
-    list_filter = ['collected', 'paid', InventoryItemSoldListFilter]
+    search_fields = ['label_id', 'name', 'description']
+    list_filter = ['collected', 'paid', 'society', InventoryItemSoldListFilter]
     list_editable = ['collected', 'paid', 'status']
-
 class BidderAdmin(admin.ModelAdmin):
     list_display = ['name', 'number']
 admin.site.register(InventoryItem,InventoryItemAdmin)
